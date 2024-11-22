@@ -1,0 +1,57 @@
+@host = http://localhost:3000
+
+###
+POST {{host}}/register
+Content-Type: application/json
+
+{
+  "username": "Obi Wan",
+  "password": "starwars"
+}
+
+###
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "Obi Wan",
+  "password": "starwars"
+}
+
+
+
+### token
+@token = {{login.response.body.token}}
+
+### Get playlist of logged in user
+GET {{host}}/playlists
+Authorization: Bearer {{token}}
+
+
+### Get specific playlist
+GET {{host}}/playlists/1
+Authorization: Bearer {{token}}
+
+
+### Add new playlist
+POST {{host}}/playlists
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Playlist Jedi",
+  "description": "Saving the galaxy",
+  "trackIds": [1,3,5]
+}
+
+
+### Get all tracks
+GET {{host}}/tracks
+
+### Get specific track
+GET {{host}}/tracks/3
+
+### Get specific track as a user
+GET {{host}}/tracks/5
+Authorization: Bearer {{token}}
